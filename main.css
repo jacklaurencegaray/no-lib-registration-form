@@ -23,13 +23,39 @@ button {
 }
 
 .registrationForm {
+    margin: 25px 35px;
     display: flex;
     flex-direction: column;
-    width: 50%;
+    max-width: 600px;
+    justify-content: center;
+}
+
+.registrationForm input,
+.registrationForm button {
+    margin-bottom: 15px;
 }
 
 .registrationForm__email {}
 
-.registrationForm__submitButton {}
+.registrationForm__submitButton {
+    background-color: cornflowerblue;
+    color: white;
+    font-weight: 500;
+}
 
 .registrationForm__username {}
+
+.personList {
+    margin: 25px 35px;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.personList__person {
+    margin-right: 12px;
+    background-color: rgba(0, 0, 0, .2);
+    font-size: 13px;
+    border-radius: 3px;
+    padding: 9px;
+    margin-bottom: 10px;
+}

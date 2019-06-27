@@ -1,3 +1,9 @@
+document.onreadystatechange = function() {
+  if (document.readyState === "complete") {
+    main()
+  }
+}
+
 var UI = (function UI() {
   var API = {}
 
@@ -50,12 +56,6 @@ var GlobalState = (function() {
 
   return API
 })()
-
-document.onreadystatechange = function() {
-  if (document.readyState === "complete") {
-    main()
-  }
-}
 
 function PersonList() {
   var personList = document.createElement("div")
