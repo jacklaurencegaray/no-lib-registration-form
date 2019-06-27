@@ -1,8 +1,6 @@
-document.onreadystatechange = function() {
-  if (document.readyState === "complete") {
-    main()
-  }
-}
+window.addEventListener("DOMContentLoaded", function() {
+  main()
+})
 
 var UI = (function UI() {
   var API = {}
