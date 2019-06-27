@@ -18,10 +18,57 @@ var UI = (function UI() {
   return API
 })(document)
 
+var GlobalState = (function() {
+  var persons = []
+  var API = {}
+  var sideEffects = []
+
+  function informNodes() {
+    sideEffects.forEach(function(sideEffect) {
+      sideEffect()
+    })
+  }
+
+  API["registerPerson"] = function(username, email) {
+    persons.push({
+      username: username,
+      email: email
+    })
+    informNodes()
+  }
+
+  API["getAllPersons"] = function() {
+    return persons.slice()
+  }
+
+  API["registerBinding"] = function(callback, shouldInvokeImmediately) {
+    if (shouldInvokeImmediately) {
+      callback()
+    }
+    sideEffects.push(callback)
+  }
+
+  return API
+})()
+
 document.onreadystatechange = function() {
   if (document.readyState === "complete") {
     main()
   }
+}
+
+function PersonList() {
+  var personList = document.createElement("div")
+  personList.classList.add("personList")
+
+  GlobalState.getAllPersons().forEach(function(person) {
+    var currentPerson = document.createElement("span")
+    currentPerson.classList.add("personList__person")
+    currentPerson.innerText = person.username + " (" + person.email + ")"
+    personList.append(currentPerson)
+  })
+
+  return personList
 }
 
 function Form() {
@@ -44,6 +91,9 @@ function Form() {
 
   form.onsubmit = function(event) {
     event.preventDefault()
+    if (usernameInput.value !== "" || emailInput.value !== "") {
+      GlobalState.registerPerson(usernameInput.value, emailInput.value)
+    }
   }
 
   form.append(header, usernameInput, emailInput, button)
@@ -51,5 +101,7 @@ function Form() {
 }
 
 function main() {
-  UI.render(UI.Fragment([Form()]))
+  GlobalState.registerBinding(() => {
+    UI.render(UI.Fragment([Form(), PersonList()]))
+  }, true)
 }
