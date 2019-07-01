@@ -28,9 +28,7 @@ var GlobalState = (function() {
   var sideEffects = []
 
   function informNodes() {
-    sideEffects.forEach(function(sideEffect) {
-      sideEffect()
-    })
+    sideEffects.forEach(function(sideEffect) => sideEffect())
   }
 
   API["registerPerson"] = function(username, email) {
